@@ -1,0 +1,50 @@
+/* category-slider.css */
+.category-slider {
+    position: relative;
+}
+
+.category-slider .slick-slide {
+    margin: 0 10px;
+    text-align: center;
+}
+
+.category-slider .slick-slide .thumbnail {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin: 0 auto 10px ;
+}
+
+.category-slider .slick-slide .title {
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+.category-slider .slick-slide .product-count {
+    margin-bottom: 0px;
+}
+
+.slick-arrow {
+    position: absolute !important;
+    top: 30%;
+    z-index: 99;
+    background-color: #fff !important;
+    width: 35px;
+    height: 30px;
+    padding: 0 !important;
+    border-radius: 5px !important;
+    box-shadow: 0 0 10px 0px #0000001f !important;
+}
+
+button.slick-next.pull-right.slick-arrow {
+    right: -12px;
+}
+
+button.slick-prev.pull-left.slick-arrow {
+    left: -10px;
+}
+
+.slick-arrow svg:not(:root) {
+    overflow: hidden;
+    width: 10px;
+    fill: #333;
+}
