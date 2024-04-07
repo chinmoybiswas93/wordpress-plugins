@@ -45,6 +45,7 @@ require_once(plugin_dir_path(__FILE__) . 'settings-page.php');
 
 // AJAX handler to fetch slider settings
 add_action('wp_ajax_get_slider_settings', 'get_slider_settings_callback');
+add_action('wp_ajax_nopriv_get_slider_settings', 'get_slider_settings_callback');
 function get_slider_settings_callback()
 {
     $options = get_option('category_slider_settings');

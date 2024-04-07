@@ -44,55 +44,27 @@ function category_slider_settings_init()
         'category_slider_settings'
     );
 
-    // Add fields for slider options
-    add_settings_field(
-        'slides_to_show_desktop',
-        'Slides to Show (Desktop)',
-        'slides_to_show_desktop_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
-    );
-
-    add_settings_field(
-        'slides_to_show_tablet',
-        'Slides to Show (Tablet)',
-        'slides_to_show_tablet_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
-    );
-
-    add_settings_field(
-        'slides_to_show_mobile',
-        'Slides to Show (Mobile)',
-        'slides_to_show_mobile_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
+    // Define fields for slider options
+    $fields = array(
+        'slides_to_show_desktop' => 'Slides to Show (Desktop)',
+        'slides_to_show_tablet' => 'Slides to Show (Tablet)',
+        'slides_to_show_mobile' => 'Slides to Show (Mobile)',
+        'desktop_breakpoint' => 'Desktop Breakpoint',
+        'tablet_breakpoint' => 'Tablet Breakpoint',
+        'mobile_breakpoint' => 'Mobile Breakpoint',
     );
 
     // Add fields for slider options
-    add_settings_field(
-        'desktop_breakpoint',
-        'Desktop Breakpoint',
-        'desktop_breakpoint_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
-    );
-
-    add_settings_field(
-        'tablet_breakpoint',
-        'Tablet Breakpoint',
-        'tablet_breakpoint_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
-    );
-
-    add_settings_field(
-        'mobile_breakpoint',
-        'Mobile Breakpoint',
-        'mobile_breakpoint_callback',
-        'category_slider_settings',
-        'category_slider_options_section'
-    );
+    foreach ($fields as $field => $label) {
+        add_settings_field(
+            $field,
+            $label,
+            'category_slider_field_callback',
+            'category_slider_settings',
+            'category_slider_options_section',
+            array('field' => $field)
+        );
+    }
 }
 add_action('admin_init', 'category_slider_settings_init');
 
@@ -102,51 +74,13 @@ function category_slider_options_section_callback()
     echo 'Configure options for the Category Slider.';
 }
 
-// Callback function for slides to show desktop field
-function slides_to_show_desktop_callback()
+// Callback function for generating input fields
+function category_slider_field_callback($args)
 {
     $options = get_option('category_slider_settings');
-    $slides_to_show_desktop = isset($options['slides_to_show_desktop']) ? $options['slides_to_show_desktop'] : 3;
-    echo '<input type="number" min="1" max="10" name="category_slider_settings[slides_to_show_desktop]" value="' . esc_attr($slides_to_show_desktop) . '" />';
-}
-
-// Callback function for slides to show tablet field
-function slides_to_show_tablet_callback()
-{
-    $options = get_option('category_slider_settings');
-    $slides_to_show_tablet = isset($options['slides_to_show_tablet']) ? $options['slides_to_show_tablet'] : 2;
-    echo '<input type="number" min="1" max="10" name="category_slider_settings[slides_to_show_tablet]" value="' . esc_attr($slides_to_show_tablet) . '" />';
-}
-
-// Callback function for slides to show mobile field
-function slides_to_show_mobile_callback()
-{
-    $options = get_option('category_slider_settings');
-    $slides_to_show_mobile = isset($options['slides_to_show_mobile']) ? $options['slides_to_show_mobile'] : 1;
-    echo '<input type="number" min="1" max="10" name="category_slider_settings[slides_to_show_mobile]" value="' . esc_attr($slides_to_show_mobile) . '" />';
-}
-
-
-// Callback function for desktop breakpoint field
-function desktop_breakpoint_callback()
-{
-    $options = get_option('category_slider_settings');
-    $desktop_breakpoint = isset($options['desktop_breakpoint']) ? $options['desktop_breakpoint'] : 1200;
-    echo '<input type="number" min="0" name="category_slider_settings[desktop_breakpoint]" value="' . esc_attr($desktop_breakpoint) . '" />';
-}
-
-// Callback function for tablet breakpoint field
-function tablet_breakpoint_callback()
-{
-    $options = get_option('category_slider_settings');
-    $tablet_breakpoint = isset($options['tablet_breakpoint']) ? $options['tablet_breakpoint'] : 1008;
-    echo '<input type="number" min="0" name="category_slider_settings[tablet_breakpoint]" value="' . esc_attr($tablet_breakpoint) . '" />';
-}
-
-// Callback function for mobile breakpoint field
-function mobile_breakpoint_callback()
-{
-    $options = get_option('category_slider_settings');
-    $mobile_breakpoint = isset($options['mobile_breakpoint']) ? $options['mobile_breakpoint'] : 800;
-    echo '<input type="number" min="0" name="category_slider_settings[mobile_breakpoint]" value="' . esc_attr($mobile_breakpoint) . '" />';
+    $value = isset($options[$args['field']]) ? $options[$args['field']] : '';
+    $type = in_array($args['field'], array('slides_to_show_desktop', 'slides_to_show_tablet', 'slides_to_show_mobile')) ? 'number' : 'text';
+    $min = in_array($args['field'], array('desktop_breakpoint', 'tablet_breakpoint', 'mobile_breakpoint')) ? 0 : 1;
+    $max = in_array($args['field'], array('slides_to_show_desktop', 'slides_to_show_tablet', 'slides_to_show_mobile')) ? 10 : '';
+    echo '<input type="' . $type . '" min="' . $min . '" max="' . $max . '" name="category_slider_settings[' . $args['field'] . ']" value="' . esc_attr($value) . '" />';
 }
