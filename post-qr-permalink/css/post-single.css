@@ -1,0 +1,42 @@
+.qrcodebox {
+  background-color: #f4f8fb;
+  padding: 10px;
+  border: 1px solid #007cba;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.qrcodebox img {
+  max-width: 100%;
+  height: auto;
+}
+
+.copy-link-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.copy-link-box input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.copy-link-box button {
+  background-color: #007cba;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.copy-link-box button:hover {
+  background-color: #005f8a;
+}
